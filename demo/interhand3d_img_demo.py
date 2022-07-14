@@ -251,7 +251,6 @@ def main():
             kpt_score_thr=args.kpt_thr,
             radius=args.radius,
             thickness=args.thickness,
-            axis_azimuth=-115,
         )
 
 

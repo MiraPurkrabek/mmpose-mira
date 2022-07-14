@@ -1,9 +1,9 @@
 coverage
 flake8
 interrogate
-isort==4.3.21
+isort
 pytest
 pytest-runner
-smplx>=0.1.28
-xdoctest>=0.10.0
+smplx
+xdoctest
 yapf
