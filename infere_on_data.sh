@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CAMERA="N"
+CAMERA="E"
 MATCH="U19_SKV_MIL_08_01_2022_1st_period_synced_1min"
 STAGE="U19_SKV_MIL_08_01_2022_1st_period_synced_1min_custom_GEOM"
 
