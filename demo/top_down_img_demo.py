@@ -149,23 +149,17 @@ def main():
             out_file = os.path.join(args.out_img_root, f'vis_{osp.splitext(osp.basename(image_name))[0]}.jpg')
         
         if args.out_txt_root != '':
-            bboxes = np.zeros((1, 4))
+
             keypoints = np.zeros((1, 17, 3))
             for pose in pose_results:
-                bboxes = np.concatenate([bboxes, pose['bbox'][None, :]])
                 keypoints = np.concatenate([keypoints, pose['keypoints'][None, :, :]])
             
-            bboxes = bboxes[1:, :]
             keypoints = keypoints[1:, :, :]
 
             ann_dict = {
                 "id": ann_ids,
-                "image_id": [image_id for _ in range(len(ann_ids))],
             }
 
-            for bbox, letter in zip(bboxes.T, "ltwh"):
-                ann_dict["bbox_{}".format(letter)] = bbox
-            
             for kpt_i in range(keypoints.shape[1]):
                 name = keypoints_names[kpt_i]
                 ann_dict[name+"_x"] = keypoints[:, kpt_i, 0]
