@@ -188,9 +188,9 @@ def main():
 
     if args.out_txt_root != '':
         os.makedirs(args.out_txt_root, exist_ok=True)
-        out_txt_path = osp.join(args.out_txt_root, "{}_poses.csv".format(
-            osp.splitext(osp.basename(args.json_file))[0]
-        ))
+        old_filename = osp.splitext(osp.basename(args.json_file))[0]
+        new_filename = old_filename.replace("COCO_anns", "poses")
+        out_txt_path = osp.join(args.out_txt_root, "{}.csv".format(new_filename))
         estimated_poses.to_csv(out_txt_path, index=False, float_format="%.4f")
 
 
