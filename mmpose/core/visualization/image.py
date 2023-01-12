@@ -1,6 +1,7 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import math
 import os
+from tkinter import image_names
 import warnings
 
 import cv2
@@ -23,6 +24,7 @@ try:
 except (ImportError, ModuleNotFoundError):
     has_pyrender = False
 
+MIN_TRANSPARENCY = 0.2
 
 def imshow_bboxes(img,
                   bboxes,
@@ -132,6 +134,7 @@ def imshow_keypoints(img,
 
     img = mmcv.imread(img)
     img_h, img_w, _ = img.shape
+    x_shift = y_shift = 0
 
     for kpts in pose_result:
 
@@ -143,17 +146,62 @@ def imshow_keypoints(img,
 
             for kid, kpt in enumerate(kpts):
                 x_coord, y_coord, kpt_score = int(kpt[0]), int(kpt[1]), kpt[2]
+                x_coord += x_shift
+                y_coord += y_shift
 
                 if kpt_score < kpt_score_thr or pose_kpt_color[kid] is None:
                     # skip the point that should not be drawn
                     continue
+                
+                # print(kpt)
+                # print(img.shape)
+
+                if (
+                        x_coord <= 0 or x_coord >= img_w
+                        or y_coord <= 0 or y_coord >= img_h):
+
+                    # Enlarge image since keypint is outside of borders
+                    left = max(-x_coord, 0) +1
+                    top = max(-y_coord, 0) +1
+                    right = max(x_coord-img_w, 0) +1
+                    bottom = max(y_coord-img_h, 0) +1
+
+                    old_img_shape = img.shape
+                    img = cv2.copyMakeBorder(
+                        img,
+                        top,
+                        bottom,
+                        left,
+                        right,
+                        cv2.BORDER_CONSTANT,
+                        None,
+                        (60, 60, 60)
+                    )
+                    img_h, img_w, _ = img.shape
+                    
+                    x_shift += left
+                    y_shift += top
+
+                    x_coord += left
+                    y_coord += top
+
+                    # print("Changing size by ({}, {}, {}, {}); {} -> {}".format(
+                    #     top,
+                    #     bottom,
+                    #     left,
+                    #     right,
+                    #     old_img_shape,
+                    #     img.shape
+                    # ))
+                
+                # print("({}, {}), {:.2f}".format(x_coord, y_coord, kpt_score))
 
                 color = tuple(int(c) for c in pose_kpt_color[kid])
                 if show_keypoint_weight:
                     img_copy = img.copy()
                     cv2.circle(img_copy, (int(x_coord), int(y_coord)), radius,
                                color, -1)
-                    transparency = max(0, min(1, kpt_score))
+                    transparency = max(MIN_TRANSPARENCY, min(1, kpt_score))
                     cv2.addWeighted(
                         img_copy,
                         transparency,
@@ -170,17 +218,19 @@ def imshow_keypoints(img,
             assert len(pose_link_color) == len(skeleton)
 
             for sk_id, sk in enumerate(skeleton):
-                pos1 = (int(kpts[sk[0], 0]), int(kpts[sk[0], 1]))
-                pos2 = (int(kpts[sk[1], 0]), int(kpts[sk[1], 1]))
+                pos1 = np.array([int(kpts[sk[0], 0]), int(kpts[sk[0], 1])])
+                pos2 = np.array([int(kpts[sk[1], 0]), int(kpts[sk[1], 1])])
 
-                if (pos1[0] <= 0 or pos1[0] >= img_w or pos1[1] <= 0
-                        or pos1[1] >= img_h or pos2[0] <= 0 or pos2[0] >= img_w
-                        or pos2[1] <= 0 or pos2[1] >= img_h
-                        or kpts[sk[0], 2] < kpt_score_thr
+                pos1 += np.array([x_shift, y_shift])
+                pos2 += np.array([x_shift, y_shift])
+                
+                if (
+                        kpts[sk[0], 2] < kpt_score_thr
                         or kpts[sk[1], 2] < kpt_score_thr
                         or pose_link_color[sk_id] is None):
                     # skip the link that should not be drawn
                     continue
+
                 color = tuple(int(c) for c in pose_link_color[sk_id])
                 if show_keypoint_weight:
                     img_copy = img.copy()
@@ -196,7 +246,7 @@ def imshow_keypoints(img,
                         int(angle), 0, 360, 1)
                     cv2.fillConvexPoly(img_copy, polygon, color)
                     transparency = max(
-                        0, min(1, 0.5 * (kpts[sk[0], 2] + kpts[sk[1], 2])))
+                        MIN_TRANSPARENCY, min(1, 0.5 * (kpts[sk[0], 2] + kpts[sk[1], 2])))
                     cv2.addWeighted(
                         img_copy,
                         transparency,

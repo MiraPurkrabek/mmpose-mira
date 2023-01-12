@@ -868,11 +868,13 @@ def process_mmdet_results(mmdet_results, cat_id=1):
     """
     if isinstance(mmdet_results, tuple):
         det_results = mmdet_results[0]
+    elif isinstance(mmdet_results, dict):
+        det_results = mmdet_results['ins_results'][0]
     else:
         det_results = mmdet_results
-
+    
     bboxes = det_results[cat_id - 1]
-
+    
     person_results = []
     for bbox in bboxes:
         person = {}

@@ -287,7 +287,7 @@ class TopDown(BasePose):
         if bbox_result:
             bboxes = np.vstack(bbox_result)
             # draw bounding boxes
-            imshow_bboxes(
+            img = imshow_bboxes(
                 img,
                 bboxes,
                 labels=bbox_labels,
@@ -298,14 +298,15 @@ class TopDown(BasePose):
                 show=False)
 
         if pose_result:
-            imshow_keypoints(img, pose_result, skeleton, kpt_score_thr,
+            img = imshow_keypoints(img, pose_result, skeleton, kpt_score_thr,
                              pose_kpt_color, pose_link_color, radius,
-                             thickness)
+                             thickness, show_keypoint_weight=True)
 
         if show:
             imshow(img, win_name, wait_time)
 
         if out_file is not None:
+            # print("Writing {}".format(img.shape))
             imwrite(img, out_file)
 
         return img

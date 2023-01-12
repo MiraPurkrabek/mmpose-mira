@@ -411,7 +411,7 @@ class AssociativeEmbedding(BasePose):
         for res in result:
             pose_result.append(res['keypoints'])
 
-        imshow_keypoints(img, pose_result, skeleton, kpt_score_thr,
+        img = imshow_keypoints(img, pose_result, skeleton, kpt_score_thr,
                          pose_kpt_color, pose_link_color, radius, thickness)
 
         if show:

@@ -7,8 +7,8 @@ STAGE="U19_SKV_MIL_08_01_2022_1st_period_synced_1min_custom_GEOM"
 
 for CAMERA in ${CAMERAS[*]}; do
     python3 demo/top_down_img_demo.py \
-        configs/body/2d_kpt_sview_rgb_img/topdown_heatmap/coco/hrnet_w48_coco_256x192.py \
-        https://download.openmmlab.com/mmpose/top_down/hrnet/hrnet_w48_coco_256x192-b9e0b3ab_20200708.pth \
+        configs/body/2d_kpt_sview_rgb_img/topdown_heatmap/coco/swin_l_p4_w7_coco_384x288.py \
+        https://download.openmmlab.com/mmpose/top_down/swin/swin_l_p4_w7_coco_384x288-c36b7845_20220705.pth \
         --img-root data/$MATCH/camera_$CAMERA/ \
         --json-file data/$MATCH/${MATCH}_camera_${CAMERA}_COCO_anns.json \
         --out-img-root vis_results/$STAGE/top_down/camera_$CAMERA \
