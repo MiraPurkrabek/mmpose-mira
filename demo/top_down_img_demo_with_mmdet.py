@@ -16,12 +16,7 @@ try:
 except (ImportError, ModuleNotFoundError):
     has_mmdet = False
 
-
-def main():
-    """Visualize the demo images.
-
-    Using mmdet to detect the human.
-    """
+def parse_args():
     parser = ArgumentParser()
     parser.add_argument('det_config', help='Config file for detection')
     parser.add_argument('det_checkpoint', help='Checkpoint file for detection')
@@ -78,6 +73,14 @@ def main():
     assert has_mmdet, 'Please install mmdet to run the demo.'
 
     args = parser.parse_args()
+    return args
+
+
+def main(args):
+    """Visualize the demo images.
+
+    Using mmdet to detect the human.
+    """
 
     assert args.show or (args.out_img_root != '')
     assert args.img != '' or args.img_root != ''
@@ -235,4 +238,5 @@ def main():
             )
 
 if __name__ == '__main__':
-    main()
+    args = parse_args()
+    main(args)
