@@ -26,9 +26,7 @@ from augmentations import (
     gradual_noise,
 )
 
-from demo.top_down_img_demo import parse_args
-from demo.top_down_img_demo import main as top_down_main
-from demo.bottom_up_img_demo import main as bottom_up_main
+from demo.image_demo import parse_args, main
 
 class bind(partial):
     """
@@ -40,24 +38,24 @@ class bind(partial):
         args = (next(iargs) if arg is ... else arg for arg in self.args)
         return self.func(*args, *iargs, **keywords)
 
-FOLDER = "/datagrid/personal/purkrmir/data/pose_experiments/parts_rotations/eyes_ears"
+FOLDER = "/datagrid/personal/purkrmir/data/pose_experiments/parts_rotations/LR_girl_front"
 
-# AUG_TYPE = "NONE"           # Do not perform any augmentations
+AUG_TYPE = "NONE"           # Do not perform any augmentations
 # AUG_TYPE = "RECURSIVE"      # Execute all augmentations in the given order, each for each image
-AUG_TYPE = "CONSECUTIVE"    # Execute all augmentations in the given order
+# AUG_TYPE = "CONSECUTIVE"    # Execute all augmentations in the given order
 # AUG_TYPE = "RANDOM"         # Randomly make 4 agmentations from the list
 
-# AUG_FOLDER_NAME = "not_augmented"
+AUG_FOLDER_NAME = "not_augmented"
 # AUG_FOLDER_NAME = "recursive"
-AUG_FOLDER_NAME = "consecutive_rotation"
+# AUG_FOLDER_NAME = "consecutive_rotation"
 # AUG_FOLDER_NAME = "augmented"
 
 N_STEPS=9
 N_IMAGES=200                # Applies only for 'RANDOM' AUG_TYPE
 
 # POSE_TYPE = "HRNet"
-POSE_TYPE = "DEKR"
-# POSE_TYPE = "SWIN"
+# POSE_TYPE = "DEKR"
+POSE_TYPE = "SWIN"
 
 POSSIBLE_EDITS = [
     # bind(random_crop),
@@ -272,13 +270,10 @@ def prepare_images(folder, json_filepath, n_images=100, max_edits=4):
 if __name__ == '__main__':
 
     if POSE_TYPE == "HRNet":
-        POSE_CFG="configs/body/2d_kpt_sview_rgb_img/topdown_heatmap/coco/hrnet_w48_coco_384x288.py"
-        POSE_PTH="https://download.openmmlab.com/mmpose/top_down/hrnet/hrnet_w48_coco_384x288-314c8528_20200708.pth"
-    elif POSE_TYPE == "DEKR":
-        POSE_CFG="configs/body/2d_kpt_sview_rgb_img/dekr/coco/hrnet_w48_coco_640x640_multiscale.py"
-        POSE_PTH="https://download.openmmlab.com/mmpose/bottom_up/dekr/hrnet_w48_coco_640x640-8854b2f1_20220930.pth"
+        POSE_CFG=""
+        POSE_PTH=""
     else:
-        POSE_CFG="configs/body/2d_kpt_sview_rgb_img/topdown_heatmap/coco/swin_l_p4_w7_coco_384x288.py"
+        POSE_CFG="configs/body_2d_keypoint/topdown_heatmap/coco/td-hm_swin-l-p4-w7_8xb32-210e_coco-384x288.py"
         POSE_PTH="https://download.openmmlab.com/mmpose/top_down/swin/swin_l_p4_w7_coco_384x288-c36b7845_20220705.pth"
 
     try:
@@ -292,28 +287,18 @@ if __name__ == '__main__':
         )
         AUG_FOLDER = os.path.join(FOLDER, AUG_FOLDER_NAME)
 
-        args.pose_config = POSE_CFG
-        args.pose_checkpoint = POSE_PTH
-        args.img_root = FOLDER
-        args.json_file = json_filepath
+        args.config = POSE_CFG
+        args.checkpoint = POSE_PTH
+        args.img = FOLDER
         args.show = False
-        args.out_img_root = os.path.join(
+        args.out_file = os.path.join(
             AUG_FOLDER,
             "out",
             "POSE_{:s}".format(POSE_TYPE),
         )
-        args.out_txt_root = ""
-        args.device = "cuda:0"
-        args.kpt_thr = 0.3
-        args.radius = 4
-        args.thickness = 1
-        args.output_heatmap = True
-        args.pose_nms_thr = 0.9
+        args.draw_heatmap = True
 
     prepare_images(FOLDER, json_filepath, N_IMAGES)
 
-    if POSE_TYPE == "DEKR":
-        args.img_root = AUG_FOLDER
-        bottom_up_main(args)
-    else:
-        top_down_main(args)
+    main(args)
+    

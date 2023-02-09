@@ -1,4 +1,5 @@
 # Copyright (c) OpenMMLab. All rights reserved.
+import os
 from argparse import ArgumentParser
 
 from mmcv.image import imread
@@ -8,6 +9,7 @@ from mmpose.registry import VISUALIZERS
 from mmpose.structures import merge_data_samples
 from mmpose.utils import register_all_modules
 
+SUPPORTED_FORMATS = ["jpg", "png", "jpeg"]
 
 def parse_args():
     parser = ArgumentParser()
@@ -15,6 +17,7 @@ def parse_args():
     parser.add_argument('config', help='Config file')
     parser.add_argument('checkpoint', help='Checkpoint file')
     parser.add_argument('--out-file', default=None, help='Path to output file')
+    parser.add_argument('--show', default=False, help='Showing the results')
     parser.add_argument(
         '--device', default='cuda:0', help='Device used for inference')
     parser.add_argument(
@@ -45,21 +48,39 @@ def main(args):
     visualizer = VISUALIZERS.build(model.cfg.visualizer)
     visualizer.set_dataset_meta(model.dataset_meta)
 
-    # inference a single image
-    results = inference_topdown(model, args.img)
-    results = merge_data_samples(results)
+    # Create array of images if the input is folder
+    if os.path.isdir(args.img):
+        args.img = [os.path.join(args.img, f) for f in os.listdir(args.img) if f.split(".")[-1].lower() in SUPPORTED_FORMATS]
+    else:
+        args.img = [args.img]
 
-    # show the results
-    img = imread(args.img, channel_order='rgb')
-    visualizer.add_datasample(
-        'result',
-        img,
-        data_sample=results,
-        draw_gt=False,
-        draw_bbox=True,
-        draw_heatmap=args.draw_heatmap,
-        show=True,
-        out_file=args.out_file)
+    # Prepare the output folder
+    if args.out_file is None:
+        root_dir = os.path.join(os.path.dirname(args.img[0]), "vis_pose")
+    else:
+        if os.path.exists(args.out_file) and os.path.isdir(args.out_file):
+            root_dir = args.out_file
+        else:
+            raise ValueError("Unknown output location")
+    args.out_file = [os.path.join(root_dir, "vis_"+os.path.basename(f)) for f in args.img]
+    
+    for img, out_file in zip(args.img, args.out_file):
+
+        # inference a single image
+        results = inference_topdown(model, img)
+        results = merge_data_samples(results)
+
+        # show the results
+        img = imread(img, channel_order='rgb')
+        visualizer.add_datasample(
+            'result',
+            img,
+            data_sample=results,
+            draw_gt=False,
+            draw_bbox=True,
+            draw_heatmap=args.draw_heatmap,
+            show=args.show,
+            out_file=out_file)
 
 
 if __name__ == '__main__':
