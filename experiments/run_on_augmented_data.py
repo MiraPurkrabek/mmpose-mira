@@ -26,7 +26,9 @@ from augmentations import (
     gradual_noise,
 )
 
-from demo.top_down_img_demo import main, parse_args
+from demo.top_down_img_demo import parse_args
+from demo.top_down_img_demo import main as top_down_main
+from demo.bottom_up_img_demo import main as bottom_up_main
 
 class bind(partial):
     """
@@ -38,7 +40,7 @@ class bind(partial):
         args = (next(iargs) if arg is ... else arg for arg in self.args)
         return self.func(*args, *iargs, **keywords)
 
-FOLDER = "/datagrid/personal/purkrmir/data/pose_experiments/running"
+FOLDER = "/datagrid/personal/purkrmir/data/pose_experiments/parts_rotations/eyes_ears"
 
 # AUG_TYPE = "NONE"           # Do not perform any augmentations
 # AUG_TYPE = "RECURSIVE"      # Execute all augmentations in the given order, each for each image
@@ -47,14 +49,15 @@ AUG_TYPE = "CONSECUTIVE"    # Execute all augmentations in the given order
 
 # AUG_FOLDER_NAME = "not_augmented"
 # AUG_FOLDER_NAME = "recursive"
-AUG_FOLDER_NAME = "consecutive"
+AUG_FOLDER_NAME = "consecutive_rotation"
 # AUG_FOLDER_NAME = "augmented"
 
-N_STEPS=7
-N_IMAGES=2                # Applies only for 'RANDOM' AUG_TYPE
+N_STEPS=9
+N_IMAGES=200                # Applies only for 'RANDOM' AUG_TYPE
 
 # POSE_TYPE = "HRNet"
-POSE_TYPE = "SWIN"
+POSE_TYPE = "DEKR"
+# POSE_TYPE = "SWIN"
 
 POSSIBLE_EDITS = [
     # bind(random_crop),
@@ -64,11 +67,20 @@ POSSIBLE_EDITS = [
     # bind(random_rotate),
     # bind(mirror),
     
-    bind(gradual_occlude, direction="vertical", reverse=True, occ_type="random", n_steps=N_STEPS),
-    bind(gradual_occlude, direction="horizontal", reverse=True, occ_type="random", n_steps=N_STEPS),
-    bind(gradual_occlude, direction="both", reverse=True, occ_type="random", n_steps=N_STEPS),
+    # bind(gradual_crop, direction="vertical", reverse=False, n_steps=N_STEPS),
+    # bind(gradual_crop, direction="horizontal", reverse=False, n_steps=N_STEPS),
     
-    # bind(gradual_rotate, n_steps=N_STEPS),
+    # bind(gradual_occlude, direction="vertical", reverse=False, occ_type="random", n_steps=N_STEPS),
+    # bind(gradual_occlude, direction="horizontal", reverse=False, occ_type="random", n_steps=N_STEPS),
+    # bind(gradual_occlude, direction="both", reverse=True, occ_type="random", n_steps=N_STEPS),
+    # bind(gradual_occlude, direction="vertical", reverse=True, occ_type="black", n_steps=N_STEPS),
+    # bind(gradual_occlude, direction="horizontal", reverse=True, occ_type="black", n_steps=N_STEPS),
+    # bind(gradual_occlude, direction="both", reverse=True, occ_type="black", n_steps=N_STEPS),
+    # bind(gradual_occlude, direction="vertical", reverse=True, occ_type="white", n_steps=N_STEPS),
+    # bind(gradual_occlude, direction="horizontal", reverse=True, occ_type="white", n_steps=N_STEPS),
+    # bind(gradual_occlude, direction="both", reverse=True, occ_type="white", n_steps=N_STEPS),
+    
+    bind(gradual_rotate, n_steps=N_STEPS),
     # bind(gradual_rescale, n_steps=N_STEPS),
     # bind(gradual_blur),
     # bind(gradual_noise, noise_type="SaltAndPepper", n_steps=N_STEPS),
@@ -78,6 +90,37 @@ POSSIBLE_EDITS = [
 ###############################################################################
 
 def save_augmented_img(img, save_name, aug_folder, json_out):
+    img_h, img_w = img.shape[:2]
+
+    new_h = img_h
+    new_w = img_w
+
+    if img_h * img_w < 10000:
+        min_scale = np.sqrt(10000 / (img_w * img_h))
+        new_w = min_scale * img_w
+        new_h = min_scale * img_h
+
+    if POSE_TYPE in ["DEKR"]:
+        if img_h * img_w > 1000000:
+            min_scale = np.sqrt(1000000 / (img_w * img_h))
+            new_w = min_scale * img_w
+            new_h = min_scale * img_h
+
+        sides_ratio = img_h / img_w
+        if sides_ratio > 3.5 or sides_ratio < 0.3:
+            if img_h > img_w:
+                new_w = img_h / 3
+                new_h = img_h
+            else:
+                new_h = img_w / 3
+                new_w = img_w
+    
+    img = cv2.resize(
+        img,
+        (int(new_w), int(new_h)),
+        interpolation=cv2.INTER_AREA,
+    )
+
     cv2.imwrite(
         os.path.join(aug_folder, "{:s}".format(save_name)),
         img
@@ -203,6 +246,23 @@ def prepare_images(folder, json_filepath, n_images=100, max_edits=4):
 
                         idx += 1
                         progress_bar.update()
+    elif AUG_TYPE.upper() == "NONE":
+        
+        with tqdm(total=len(images), ascii=True) as progress_bar:
+
+            for selected_img in images:
+            
+                img_name = ".".join(selected_img.split(".")[:-1])
+                selected_img_path = os.path.join(folder, selected_img)
+                img = cv2.imread(selected_img_path)
+            
+                save_name = "{:s}.{:s}".format(
+                    img_name,
+                    "jpg"
+                )
+                json_out = save_augmented_img(img, save_name, aug_folder, json_out)
+
+                progress_bar.update()
 
 
     with open(json_filepath, "w") as f:
@@ -214,6 +274,9 @@ if __name__ == '__main__':
     if POSE_TYPE == "HRNet":
         POSE_CFG="configs/body/2d_kpt_sview_rgb_img/topdown_heatmap/coco/hrnet_w48_coco_384x288.py"
         POSE_PTH="https://download.openmmlab.com/mmpose/top_down/hrnet/hrnet_w48_coco_384x288-314c8528_20200708.pth"
+    elif POSE_TYPE == "DEKR":
+        POSE_CFG="configs/body/2d_kpt_sview_rgb_img/dekr/coco/hrnet_w48_coco_640x640_multiscale.py"
+        POSE_PTH="https://download.openmmlab.com/mmpose/bottom_up/dekr/hrnet_w48_coco_640x640-8854b2f1_20220930.pth"
     else:
         POSE_CFG="configs/body/2d_kpt_sview_rgb_img/topdown_heatmap/coco/swin_l_p4_w7_coco_384x288.py"
         POSE_PTH="https://download.openmmlab.com/mmpose/top_down/swin/swin_l_p4_w7_coco_384x288-c36b7845_20220705.pth"
@@ -245,7 +308,12 @@ if __name__ == '__main__':
         args.radius = 4
         args.thickness = 1
         args.output_heatmap = True
+        args.pose_nms_thr = 0.9
 
     prepare_images(FOLDER, json_filepath, N_IMAGES)
 
-    main(args)
+    if POSE_TYPE == "DEKR":
+        args.img_root = AUG_FOLDER
+        bottom_up_main(args)
+    else:
+        top_down_main(args)

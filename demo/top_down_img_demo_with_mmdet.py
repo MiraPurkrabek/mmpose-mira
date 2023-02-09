@@ -94,6 +94,10 @@ def main(args):
         args.pose_config, args.pose_checkpoint, device=args.device.lower())
 
     dataset = pose_model.cfg.data['test']['type']
+    print(dataset)
+    return
+
+
     dataset_info = pose_model.cfg.data['test'].get('dataset_info', None)
     if dataset_info is None:
         warnings.warn(

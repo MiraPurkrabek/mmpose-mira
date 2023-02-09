@@ -210,6 +210,11 @@ def main(args):
                     os.path.join(args.out_img_root,"heatmaps"),
                     exist_ok=True
                 )
+                sep_heatmaps_dir = os.path.join(
+                    args.out_img_root,
+                    "sep_heatmaps",
+                )
+                os.makedirs(sep_heatmaps_dir, exist_ok=True)
 
                 out_general_heatmap_orig = os.path.join(
                     args.out_img_root,
@@ -318,6 +323,23 @@ def main(args):
                     intermediate_htm,
                     inv_trans, (int(orig_w), int(orig_h)),
                     flags=cv2.INTER_CUBIC
+                )
+
+                colored_sep_htmp = cv2.applyColorMap(
+                    big_htm.astype(np.uint8),
+                    cv2.COLORMAP_JET
+                )
+                colored_sep_htmp = cv2.addWeighted(img, 0.35, colored_sep_htmp, 0.65, 0)
+                save_path = os.path.join(
+                    sep_heatmaps_dir,
+                    "vis_{:s}_heatmap_{:s}.jpg".format(
+                        osp.splitext(osp.basename(image_name))[0],
+                        keypoints_names_short[kpt_channel],
+                    ),
+                )
+                mmcv.image.imwrite(
+                    colored_sep_htmp,
+                    save_path,
                 )
 
                 # general_heatmap_3c[:, :, int(kpt_channel%3)] += cv2.resize(

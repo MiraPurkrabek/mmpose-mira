@@ -13,7 +13,7 @@ def parse_args():
     parser.add_argument(
         'gt_json_file',
         help='input ground-truth json file to get the image name. '
-        'Default: "data/mpii/mpii_val.json" ')
+        'Default: "/datagrid/personal/purkrmir/data/MPII/annotations/mpii_val.json" ')
     parser.add_argument('output_json_file', help='output converted json file.')
     args = parser.parse_args()
     return args

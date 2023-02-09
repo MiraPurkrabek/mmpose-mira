@@ -95,7 +95,7 @@ val_pipeline = [
 
 test_pipeline = val_pipeline
 
-data_root = 'data/mpii'
+data_root = '/datagrid/personal/purkrmir/data/MPII'
 data = dict(
     samples_per_gpu=64,
     workers_per_gpu=2,

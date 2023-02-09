@@ -187,6 +187,9 @@ class TopDownCocoDataset(Kpt2dSviewRgbImgTopDownDataset):
         if not all_boxes:
             raise ValueError('=> Load %s fail!' % self.bbox_file)
 
+        if isinstance(all_boxes, dict):
+            all_boxes = all_boxes["annotations"]
+
         print(f'=> Total boxes: {len(all_boxes)}')
 
         kpt_db = []
@@ -198,7 +201,11 @@ class TopDownCocoDataset(Kpt2dSviewRgbImgTopDownDataset):
             image_file = osp.join(self.img_prefix,
                                   self.id2name[det_res['image_id']])
             box = det_res['bbox']
-            score = det_res['score']
+
+            try:
+                score = det_res['score']
+            except KeyError:
+                score = 1.0
 
             if score < self.det_bbox_thr:
                 continue

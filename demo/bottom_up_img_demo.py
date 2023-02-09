@@ -35,29 +35,13 @@ keypoints_names_short = [
                 "r_ankle"
             ]
 
-def _box2cs(box, image_size):
-    x, y, w, h = box[:4]
-
-    aspect_ratio = 1. * image_size[0] / image_size[1]
-    center = np.zeros((2), dtype=np.float32)
-    center[0] = x + w * 0.5
-    center[1] = y + h * 0.5
-
-    if w > aspect_ratio * h:
-        h = w * 1.0 / aspect_ratio
-    elif w < aspect_ratio * h:
-        w = h * aspect_ratio
-    scale = np.array([w * 1.0 / 200.0, h * 1.0 / 200.0], dtype=np.float32)
-    scale = scale * 1.25
-    return center, scale
-
 def parse_args():
     """Visualize the demo images."""
     parser = ArgumentParser()
     parser.add_argument('pose_config', help='Config file for detection')
     parser.add_argument('pose_checkpoint', help='Checkpoint file')
     parser.add_argument(
-        '--img-path',
+        '--img-root',
         type=str,
         help='Path to an image file or a image folder.')
     parser.add_argument(
@@ -99,16 +83,16 @@ def main(args):
     assert args.show or (args.out_img_root != '')
 
     # prepare image list
-    if osp.isfile(args.img_path):
-        image_list = [args.img_path]
-    elif osp.isdir(args.img_path):
+    if osp.isfile(args.img_root):
+        image_list = [args.img_root]
+    elif osp.isdir(args.img_root):
         image_list = [
-            osp.join(args.img_path, fn) for fn in os.listdir(args.img_path)
+            osp.join(args.img_root, fn) for fn in os.listdir(args.img_root)
             if fn.lower().endswith(('.png', '.jpg', '.jpeg', '.tiff', '.bmp'))
         ]
     else:
         raise ValueError('Image path should be an image or image folder.'
-                         f'Got invalid image path: {args.img_path}')
+                         f'Got invalid image path: {args.img_root}')
 
     # build the pose model from a config file and a checkpoint file
     pose_model = init_pose_model(
@@ -135,6 +119,8 @@ def main(args):
     for image_name in mmcv.track_iter_progress(image_list):
 
         # test a single image, with a list of bboxes.
+        print()
+        print(image_name)
         pose_results, returned_outputs = inference_bottom_up_pose_model(
             pose_model,
             image_name,
@@ -169,6 +155,13 @@ def main(args):
                     exist_ok=True
                 )
 
+                sep_heatmaps_dir = os.path.join(
+                    args.out_img_root,
+                    "sep_heatmaps"
+                )
+                os.makedirs(sep_heatmaps_dir, exist_ok=True)
+
+
         # show the results
         vis_pose_result(
             pose_model,
@@ -190,28 +183,35 @@ def main(args):
 
             orig_h, orig_w, _ = img.shape
 
-            required_h = 384
-            required_w = 288
-
-            center, scale = _box2cs([0, 0, orig_w, orig_h], (required_w, required_h))
-            inv_trans = get_affine_transform(center, scale, 0, (required_w, required_h), inv=True)
-
             general_heatmap_3c = np.zeros((orig_h, orig_w, 3))
-                       
-            for kpt_channel in range(heatmap.shape[0]):
+            
+            for kpt_channel in range(1, heatmap.shape[0]):
                 htm = heatmap[kpt_channel, :, :].squeeze()
                 htm = ((htm - np.min(htm[:])) * 255)
-                intermediate_htm = cv2.resize(
+                big_htm = cv2.resize(
                     htm,
-                    (required_w, required_h),
+                    (orig_w, orig_h),
                     interpolation=cv2.INTER_CUBIC,
                 )
-                big_htm = cv2.warpAffine(
-                    intermediate_htm,
-                    inv_trans, (int(orig_w), int(orig_h)),
-                    flags=cv2.INTER_CUBIC
+
+                colored_sep_htmp = cv2.applyColorMap(
+                    big_htm.astype(np.uint8),
+                    cv2.COLORMAP_JET
+                )
+                colored_sep_htmp = cv2.addWeighted(img, 0.35, colored_sep_htmp, 0.65, 0)
+                save_path = os.path.join(
+                    sep_heatmaps_dir,
+                    "vis_{:s}_heatmap_{:s}.jpg".format(
+                        osp.splitext(osp.basename(image_name))[0],
+                        keypoints_names_short[kpt_channel-1],
+                    ),
+                )
+                mmcv.image.imwrite(
+                    colored_sep_htmp,
+                    save_path,
                 )
 
+                
                 general_heatmap_3c[:, :, int(kpt_channel%3)] += big_htm
 
                 color = [100, 100, 100]
@@ -223,13 +223,12 @@ def main(args):
                 # Only show those keypoints with ppt higher than 10%
                 if peak/255 > 0.1:
 
-                    # print()
-                    # print(image_name)
-                    # print("\t{:s}: \t\t {:.4f}".format(keypoints_names[kpt_channel], peak))
-
                     general_heatmap_3c = cv2.putText(
                         general_heatmap_3c,
-                        "{:s} ({:.1f})".format(keypoints_names_short[kpt_channel], peak/255),
+                        "{:s} ({:.2f})".format(
+                            keypoints_names_short[kpt_channel-1],
+                            peak/255
+                        ),
                         coors[::-1],
                         fontFace = cv2.FONT_HERSHEY_SIMPLEX,
                         fontScale = 1,

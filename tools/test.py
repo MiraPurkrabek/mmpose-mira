@@ -166,6 +166,16 @@ def main():
         outputs = multi_gpu_test(model, data_loader, args.tmpdir,
                                  args.gpu_collect)
 
+    print()
+    print()
+    print(type(outputs))
+    print(len(outputs))
+    # print(type(outputs[0]))
+    print(outputs[0].keys())
+    print(len(outputs[0]["boxes"]))
+    print()
+    print()
+
     rank, _ = get_dist_info()
     eval_config = cfg.get('evaluation', {})
     eval_config = merge_configs(eval_config, dict(metric=args.eval))
