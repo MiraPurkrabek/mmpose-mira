@@ -40,23 +40,23 @@ def test_top_down_COCO_dataset_compatibility():
         vis_thr=0.2,
         use_gt_bbox=True,
         det_bbox_thr=0.0,
-        bbox_file='tests/data/coco/test_coco_det_AP_H_56.json',
+        bbox_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco_det_AP_H_56.json',
     )
     # Test det bbox
     data_cfg_copy = copy.deepcopy(data_cfg)
     data_cfg_copy['use_gt_bbox'] = False
     with pytest.warns(DeprecationWarning):
         _ = dataset_class(
-            ann_file='tests/data/coco/test_coco.json',
-            img_prefix='tests/data/coco/',
+            ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco.json',
+            img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
             data_cfg=data_cfg_copy,
             pipeline=[],
             test_mode=True)
 
     with pytest.warns(DeprecationWarning):
         _ = dataset_class(
-            ann_file='tests/data/coco/test_coco.json',
-            img_prefix='tests/data/coco/',
+            ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco.json',
+            img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
             data_cfg=data_cfg_copy,
             pipeline=[],
             test_mode=False)
@@ -64,8 +64,8 @@ def test_top_down_COCO_dataset_compatibility():
     # Test gt bbox
     with pytest.warns(DeprecationWarning):
         custom_dataset = dataset_class(
-            ann_file='tests/data/coco/test_coco.json',
-            img_prefix='tests/data/coco/',
+            ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco.json',
+            img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
             data_cfg=data_cfg,
             pipeline=[],
             test_mode=True)
@@ -344,23 +344,23 @@ def test_top_down_COCO_wholebody_dataset_compatibility():
         vis_thr=0.2,
         use_gt_bbox=True,
         det_bbox_thr=0.0,
-        bbox_file='tests/data/coco/test_coco_det_AP_H_56.json',
+        bbox_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco_det_AP_H_56.json',
     )
     # Test det bbox
     data_cfg_copy = copy.deepcopy(data_cfg)
     data_cfg_copy['use_gt_bbox'] = False
     with pytest.warns(DeprecationWarning):
         _ = dataset_class(
-            ann_file='tests/data/coco/test_coco_wholebody.json',
-            img_prefix='tests/data/coco/',
+            ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco_wholebody.json',
+            img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
             data_cfg=data_cfg_copy,
             pipeline=[],
             test_mode=True)
 
     with pytest.warns(DeprecationWarning):
         _ = dataset_class(
-            ann_file='tests/data/coco/test_coco_wholebody.json',
-            img_prefix='tests/data/coco/',
+            ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco_wholebody.json',
+            img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
             data_cfg=data_cfg_copy,
             pipeline=[],
             test_mode=False)
@@ -368,8 +368,8 @@ def test_top_down_COCO_wholebody_dataset_compatibility():
     # Test gt bbox
     with pytest.warns(DeprecationWarning):
         custom_dataset = dataset_class(
-            ann_file='tests/data/coco/test_coco_wholebody.json',
-            img_prefix='tests/data/coco/',
+            ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco_wholebody.json',
+            img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
             data_cfg=data_cfg,
             pipeline=[],
             test_mode=True)

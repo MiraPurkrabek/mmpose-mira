@@ -79,7 +79,7 @@ def _check_flip(origin_imgs, result_imgs):
 
 def test_bottomup_pipeline():
 
-    data_prefix = 'tests/data/coco/'
+    data_prefix = 'tests//datagrid/personal/purkrmir/data/COCO/original//'
     ann_file = osp.join(data_prefix, 'test_coco.json')
     coco = COCO(ann_file)
 
@@ -356,7 +356,7 @@ def test_bottomup_pipeline():
 
 def test_BottomUpGenerateHeatmapTarget():
 
-    data_prefix = 'tests/data/coco/'
+    data_prefix = 'tests//datagrid/personal/purkrmir/data/COCO/original//'
     ann_file = osp.join(data_prefix, 'test_coco.json')
     coco = COCO(ann_file)
 
@@ -406,7 +406,7 @@ def test_BottomUpGenerateHeatmapTarget():
 
 
 def test_GetKeypointCenterArea():
-    data_prefix = 'tests/data/coco/'
+    data_prefix = 'tests//datagrid/personal/purkrmir/data/COCO/original//'
     ann_file = osp.join(data_prefix, 'test_coco.json')
     coco = COCO(ann_file)
 
@@ -450,7 +450,7 @@ def test_GetKeypointCenterArea():
 
 
 def test_BottomUpGenerateOffsetTarget():
-    data_prefix = 'tests/data/coco/'
+    data_prefix = 'tests//datagrid/personal/purkrmir/data/COCO/original//'
     ann_file = osp.join(data_prefix, 'test_coco.json')
     coco = COCO(ann_file)
 

@@ -73,16 +73,16 @@ def test_bottom_up_COCO_dataset_compatibility():
 
     with pytest.warns(DeprecationWarning):
         _ = dataset_class(
-            ann_file='tests/data/coco/test_coco.json',
-            img_prefix='tests/data/coco/',
+            ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco.json',
+            img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
             data_cfg=data_cfg,
             pipeline=[],
             test_mode=False)
 
     with pytest.warns(DeprecationWarning):
         custom_dataset = dataset_class(
-            ann_file='tests/data/coco/test_coco.json',
-            img_prefix='tests/data/coco/',
+            ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco.json',
+            img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
             data_cfg=data_cfg,
             pipeline=[],
             test_mode=True)
@@ -294,16 +294,16 @@ def test_bottom_up_COCO_wholebody_dataset_compatibility():
 
     with pytest.warns(DeprecationWarning):
         _ = dataset_class(
-            ann_file='tests/data/coco/test_coco_wholebody.json',
-            img_prefix='tests/data/coco/',
+            ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco_wholebody.json',
+            img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
             data_cfg=data_cfg,
             pipeline=[],
             test_mode=False)
 
     with pytest.warns(DeprecationWarning):
         custom_dataset = dataset_class(
-            ann_file='tests/data/coco/test_coco_wholebody.json',
-            img_prefix='tests/data/coco/',
+            ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco_wholebody.json',
+            img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
             data_cfg=data_cfg,
             pipeline=[],
             test_mode=True)

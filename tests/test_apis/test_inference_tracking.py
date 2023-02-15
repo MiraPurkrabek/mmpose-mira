@@ -15,7 +15,7 @@ def test_top_down_pose_tracking_demo():
         'coco/res50_coco_256x192.py',
         None,
         device='cpu')
-    image_name = 'tests/data/coco/000000000785.jpg'
+    image_name = 'tests//datagrid/personal/purkrmir/data/COCO/original//000000000785.jpg'
     dataset_info = DatasetInfo(pose_model.cfg.data['test']['dataset_info'])
     person_result = [{'bbox': [50, 50, 50, 100]}]
 
@@ -135,7 +135,7 @@ def test_bottom_up_pose_tracking_demo():
         None,
         device='cpu')
 
-    image_name = 'tests/data/coco/000000000785.jpg'
+    image_name = 'tests//datagrid/personal/purkrmir/data/COCO/original//000000000785.jpg'
     dataset_info = DatasetInfo(pose_model.cfg.data['test']['dataset_info'])
 
     pose_results, _ = inference_bottom_up_pose_model(

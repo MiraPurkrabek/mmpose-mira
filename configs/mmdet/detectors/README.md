@@ -14,7 +14,7 @@ Many modern object detectors demonstrate outstanding performances by using the m
 
 ## Introduction
 
-DetectoRS requires COCO and [COCO-stuff](http://calvin.inf.ed.ac.uk/wp-content/uploads/data/cocostuffdataset/stuffthingmaps_trainval2017.zip) dataset for training. You need to download and extract it in the COCO dataset path.
+DetectoRS requires COCO and [COCO-stuff](http://calvin.inf.ed.ac.uk/wp-content/uploads//datagrid/personal/purkrmir/data/COCO/original/stuffdataset/stuffthingmaps_trainval2017.zip) dataset for training. You need to download and extract it in the COCO dataset path.
 The directory should be like this.
 
 ```none

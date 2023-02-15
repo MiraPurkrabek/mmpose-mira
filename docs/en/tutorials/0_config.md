@@ -144,7 +144,7 @@ configs/{topic}/{task}/{algorithm}/{dataset}/{backbone}_[model_setting]_{dataset
       vis_thr=0.2,  # Threshold of keypoint visibility
       use_gt_bbox=False,  # Whether to use ground-truth bounding box during testing
       det_bbox_thr=0.0,  # Threshold of detected bounding box score. Used when 'use_gt_bbox=True'
-      bbox_file='data/coco/person_detection_results/'  # Path to the bounding box detection file
+      bbox_file='/datagrid/personal/purkrmir/data/COCO/original//person_detection_results/'  # Path to the bounding box detection file
       'COCO_val2017_detections_AP_H_56_person.json',
   )
 
@@ -197,7 +197,7 @@ configs/{topic}/{task}/{algorithm}/{dataset}/{backbone}_[model_setting]_{dataset
 
   test_pipeline = val_pipeline
 
-  data_root = 'data/coco' # Root of the dataset
+  data_root = '/datagrid/personal/purkrmir/data/COCO/original/' # Root of the dataset
   data = dict( # Config of data
       samples_per_gpu=64,  # Batch size of each single GPU during training
       workers_per_gpu=2,  # Workers to pre-fetch data for each single GPU

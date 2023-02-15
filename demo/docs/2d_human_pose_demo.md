@@ -23,7 +23,7 @@ Examples:
 python demo/top_down_img_demo.py \
     configs/body/2d_kpt_sview_rgb_img/topdown_heatmap/coco/hrnet_w48_coco_256x192.py \
     https://download.openmmlab.com/mmpose/top_down/hrnet/hrnet_w48_coco_256x192-b9e0b3ab_20200708.pth \
-    --img-root tests/data/coco/ --json-file tests/data/coco/test_coco.json \
+    --img-root tests//datagrid/personal/purkrmir/data/COCO/original// --json-file tests//datagrid/personal/purkrmir/data/COCO/original//test_coco.json \
     --out-img-root vis_results
 ```
 
@@ -33,7 +33,7 @@ To run demos on CPU:
 python demo/top_down_img_demo.py \
     configs/body/2d_kpt_sview_rgb_img/topdown_heatmap/coco/hrnet_w48_coco_256x192.py \
     https://download.openmmlab.com/mmpose/top_down/hrnet/hrnet_w48_coco_256x192-b9e0b3ab_20200708.pth \
-    --img-root tests/data/coco/ --json-file tests/data/coco/test_coco.json \
+    --img-root tests//datagrid/personal/purkrmir/data/COCO/original// --json-file tests//datagrid/personal/purkrmir/data/COCO/original//test_coco.json \
     --out-img-root vis_results \
     --device=cpu
 ```
@@ -62,7 +62,7 @@ python demo/top_down_img_demo_with_mmdet.py \
     https://download.openmmlab.com/mmdetection/v2.0/faster_rcnn/faster_rcnn_r50_fpn_1x_coco/faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth \
     configs/body/2d_kpt_sview_rgb_img/topdown_heatmap/coco/hrnet_w48_coco_256x192.py \
     https://download.openmmlab.com/mmpose/top_down/hrnet/hrnet_w48_coco_256x192-b9e0b3ab_20200708.pth \
-    --img-root tests/data/coco/ \
+    --img-root tests//datagrid/personal/purkrmir/data/COCO/original// \
     --img 000000196141.jpg \
     --out-img-root vis_results
 ```
@@ -185,7 +185,7 @@ Examples:
 python demo/bottom_up_img_demo.py \
     configs/body/2d_kpt_sview_rgb_img/associative_embedding/coco/hrnet_w32_coco_512x512.py \
     https://download.openmmlab.com/mmpose/bottom_up/hrnet_w32_coco_512x512-bcb8c247_20200816.pth \
-    --img-path tests/data/coco/ \
+    --img-path tests//datagrid/personal/purkrmir/data/COCO/original// \
     --out-img-root vis_results
 ```
 

@@ -143,7 +143,7 @@ configs/{topic}/{task}/{algorithm}/{dataset}/{backbone}_[model_setting]_{dataset
       vis_thr=0.2,  # 关键点可见性阈值
       use_gt_bbox=False,  # 测试时是否使用人工标注的边界框
       det_bbox_thr=0.0,  # 检测到的边界框分数的阈值。当 'use_gt_bbox=True' 时使用
-      bbox_file='data/coco/person_detection_results/'  # 边界框检测文件的路径
+      bbox_file='/datagrid/personal/purkrmir/data/COCO/original//person_detection_results/'  # 边界框检测文件的路径
       'COCO_val2017_detections_AP_H_56_person.json',
   )
 
@@ -196,7 +196,7 @@ configs/{topic}/{task}/{algorithm}/{dataset}/{backbone}_[model_setting]_{dataset
 
   test_pipeline = val_pipeline
 
-  data_root = 'data/coco'  # 数据集的配置
+  data_root = '/datagrid/personal/purkrmir/data/COCO/original/'  # 数据集的配置
   data = dict(
       samples_per_gpu=64,  # 训练期间每个 GPU 的 Batch size
       workers_per_gpu=2,  # 每个 GPU 预取数据的 worker 个数

@@ -22,7 +22,7 @@ def test_top_down_demo():
         'coco/res50_coco_256x192.py',
         None,
         device='cpu')
-    image_name = 'tests/data/coco/000000000785.jpg'
+    image_name = 'tests//datagrid/personal/purkrmir/data/COCO/original//000000000785.jpg'
     dataset_info = DatasetInfo(pose_model.cfg.data['test'].get(
         'dataset_info', None))
 
@@ -267,7 +267,7 @@ def test_bottom_up_demo():
         None,
         device='cpu')
 
-    image_name = 'tests/data/coco/000000000785.jpg'
+    image_name = 'tests//datagrid/personal/purkrmir/data/COCO/original//000000000785.jpg'
     dataset_info = DatasetInfo(pose_model.cfg.data['test'].get(
         'dataset_info', None))
 

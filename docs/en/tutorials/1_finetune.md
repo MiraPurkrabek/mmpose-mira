@@ -95,7 +95,7 @@ The users may also need to prepare the dataset and write the configs about datas
 MMPose supports multiple (10+) dataset, including COCO, COCO-WholeBody and MPII-TRB.
 
 ```python
-data_root = 'data/coco'
+data_root = '/datagrid/personal/purkrmir/data/COCO/original/'
 data = dict(
     samples_per_gpu=32,
     workers_per_gpu=2,

@@ -42,22 +42,22 @@ def test_top_down_COCO_dataset():
         vis_thr=0.2,
         use_gt_bbox=True,
         det_bbox_thr=0.0,
-        bbox_file='tests/data/coco/test_coco_det_AP_H_56.json',
+        bbox_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco_det_AP_H_56.json',
     )
     # Test det bbox
     data_cfg_copy = copy.deepcopy(data_cfg)
     data_cfg_copy['use_gt_bbox'] = False
     _ = dataset_class(
-        ann_file='tests/data/coco/test_coco.json',
-        img_prefix='tests/data/coco/',
+        ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco.json',
+        img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
         data_cfg=data_cfg_copy,
         pipeline=[],
         dataset_info=dataset_info,
         test_mode=True)
 
     _ = dataset_class(
-        ann_file='tests/data/coco/test_coco.json',
-        img_prefix='tests/data/coco/',
+        ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco.json',
+        img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
         data_cfg=data_cfg_copy,
         pipeline=[],
         dataset_info=dataset_info,
@@ -65,8 +65,8 @@ def test_top_down_COCO_dataset():
 
     # Test gt bbox
     custom_dataset = dataset_class(
-        ann_file='tests/data/coco/test_coco.json',
-        img_prefix='tests/data/coco/',
+        ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco.json',
+        img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
         data_cfg=data_cfg,
         pipeline=[],
         dataset_info=dataset_info,
@@ -538,22 +538,22 @@ def test_top_down_COCO_wholebody_dataset():
         vis_thr=0.2,
         use_gt_bbox=True,
         det_bbox_thr=0.0,
-        bbox_file='tests/data/coco/test_coco_det_AP_H_56.json',
+        bbox_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco_det_AP_H_56.json',
     )
     # Test det bbox
     data_cfg_copy = copy.deepcopy(data_cfg)
     data_cfg_copy['use_gt_bbox'] = False
     _ = dataset_class(
-        ann_file='tests/data/coco/test_coco_wholebody.json',
-        img_prefix='tests/data/coco/',
+        ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco_wholebody.json',
+        img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
         data_cfg=data_cfg_copy,
         pipeline=[],
         dataset_info=dataset_info,
         test_mode=True)
 
     _ = dataset_class(
-        ann_file='tests/data/coco/test_coco_wholebody.json',
-        img_prefix='tests/data/coco/',
+        ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco_wholebody.json',
+        img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
         data_cfg=data_cfg_copy,
         pipeline=[],
         dataset_info=dataset_info,
@@ -561,8 +561,8 @@ def test_top_down_COCO_wholebody_dataset():
 
     # Test gt bbox
     custom_dataset = dataset_class(
-        ann_file='tests/data/coco/test_coco_wholebody.json',
-        img_prefix='tests/data/coco/',
+        ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco_wholebody.json',
+        img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
         data_cfg=data_cfg,
         pipeline=[],
         dataset_info=dataset_info,
@@ -614,14 +614,14 @@ def test_top_down_halpe_dataset():
         vis_thr=0.2,
         use_gt_bbox=True,
         det_bbox_thr=0.0,
-        bbox_file='tests/data/coco/test_coco_det_AP_H_56.json',
+        bbox_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco_det_AP_H_56.json',
     )
     # Test det bbox
     data_cfg_copy = copy.deepcopy(data_cfg)
     data_cfg_copy['use_gt_bbox'] = False
     _ = dataset_class(
         ann_file='tests/data/halpe/test_halpe.json',
-        img_prefix='tests/data/coco/',
+        img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
         data_cfg=data_cfg_copy,
         pipeline=[],
         dataset_info=dataset_info,
@@ -629,7 +629,7 @@ def test_top_down_halpe_dataset():
 
     _ = dataset_class(
         ann_file='tests/data/halpe/test_halpe.json',
-        img_prefix='tests/data/coco/',
+        img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
         data_cfg=data_cfg_copy,
         pipeline=[],
         dataset_info=dataset_info,
@@ -638,7 +638,7 @@ def test_top_down_halpe_dataset():
     # Test gt bbox
     custom_dataset = dataset_class(
         ann_file='tests/data/halpe/test_halpe.json',
-        img_prefix='tests/data/coco/',
+        img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
         data_cfg=data_cfg,
         pipeline=[],
         dataset_info=dataset_info,

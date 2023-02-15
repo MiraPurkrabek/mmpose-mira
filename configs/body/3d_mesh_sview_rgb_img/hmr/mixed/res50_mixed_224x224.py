@@ -129,7 +129,7 @@ data = dict(
                     pipeline=train_pipeline),
                 dict(
                     ann_file='data/mesh_annotation_files/coco_2014_train.npz',
-                    img_prefix='data/coco',
+                    img_prefix='/datagrid/personal/purkrmir/data/COCO/original/',
                     data_cfg=data_cfg,
                     pipeline=train_pipeline)
             ],

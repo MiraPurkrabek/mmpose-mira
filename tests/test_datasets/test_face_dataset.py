@@ -92,16 +92,16 @@ def test_face_coco_wholebody_dataset():
     # Test
     data_cfg_copy = copy.deepcopy(data_cfg)
     _ = dataset_class(
-        ann_file='tests/data/coco/test_coco_wholebody.json',
-        img_prefix='tests/data/coco/',
+        ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco_wholebody.json',
+        img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
         data_cfg=data_cfg_copy,
         pipeline=[],
         dataset_info=dataset_info,
         test_mode=True)
 
     custom_dataset = dataset_class(
-        ann_file='tests/data/coco/test_coco_wholebody.json',
-        img_prefix='tests/data/coco/',
+        ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco_wholebody.json',
+        img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
         data_cfg=data_cfg_copy,
         pipeline=[],
         dataset_info=dataset_info,

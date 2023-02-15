@@ -99,7 +99,7 @@ The downloading will take several seconds or more, depending on your network env
 Option (a). If you install mmpose from source, just run the following command.
 
 ```shell
-python demo/bottom_up_img_demo.py associative_embedding_hrnet_w32_coco_512x512.py hrnet_w32_coco_512x512-bcb8c247_20200816.pth --img-path tests/data/coco/ --out-img-root vis_results
+python demo/bottom_up_img_demo.py associative_embedding_hrnet_w32_coco_512x512.py hrnet_w32_coco_512x512-bcb8c247_20200816.pth --img-path tests//datagrid/personal/purkrmir/data/COCO/original// --out-img-root vis_results
 ```
 
 You will see several images in this folder: `vis_results`, where the human pose estimation results are plotted on the images.

@@ -57,8 +57,7 @@ data_cfg = dict(
     vis_thr=0.2,
     use_gt_bbox=True,
     det_bbox_thr=0.0,
-    bbox_file='data/coco/person_detection_results/'
-    'COCO_val2017_detections_AP_H_56_person.json',
+    bbox_file='/datagrid/personal/purkrmir/data/COCO/original/annotations/person_keypoints_val2017.json',
 )
 
 train_pipeline = [
@@ -116,8 +115,8 @@ data = dict(
     test_dataloader=dict(samples_per_gpu=32),
     train=dict(
         type='TopDownCocoDataset',
-        ann_file='data/coco/annotations/person_keypoints_train2017.json',
-        img_prefix='data/coco//train2017/',
+        ann_file='/datagrid/personal/purkrmir/data/COCO/original//annotations/person_keypoints_train2017.json',
+        img_prefix='/datagrid/personal/purkrmir/data/COCO/original///train2017/',
         data_cfg=data_cfg,
         pipeline=train_pipeline,
         dataset_info={{_base_.dataset_info}}),

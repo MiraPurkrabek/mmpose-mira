@@ -99,7 +99,7 @@ model = dict(
         shift_heatmap=True,
         modulate_kernel=11))
 
-data_root = 'data/coco'
+data_root = '/datagrid/personal/purkrmir/data/COCO/original/'
 data_cfg = dict(
     image_size=[288, 384],
     heatmap_size=[72, 96],

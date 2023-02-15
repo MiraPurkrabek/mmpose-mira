@@ -56,7 +56,7 @@ test_pipeline = [
         ])
 ]
 dataset_type = 'CocoDataset'
-data_root = 'data/coco/'
+data_root = '/datagrid/personal/purkrmir/data/COCO/original//'
 data = dict(
     _delete_=True,
     samples_per_gpu=2,

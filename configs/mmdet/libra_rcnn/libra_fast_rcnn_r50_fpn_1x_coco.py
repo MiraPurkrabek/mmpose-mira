@@ -40,7 +40,7 @@ model = dict(
                     num_bins=3)))))
 # dataset settings
 dataset_type = 'CocoDataset'
-data_root = 'data/coco/'
+data_root = '/datagrid/personal/purkrmir/data/COCO/original//'
 data = dict(
     train=dict(proposal_file=data_root +
                'libra_proposals/rpn_r50_fpn_1x_train2017.pkl'),

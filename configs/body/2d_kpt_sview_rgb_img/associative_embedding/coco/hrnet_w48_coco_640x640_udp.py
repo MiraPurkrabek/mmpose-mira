@@ -163,7 +163,7 @@ val_pipeline = [
 
 test_pipeline = val_pipeline
 
-data_root = 'data/coco'
+data_root = '/datagrid/personal/purkrmir/data/COCO/original/'
 data = dict(
     workers_per_gpu=2,
     train_dataloader=dict(samples_per_gpu=8),

@@ -32,13 +32,13 @@ def test_concat_dataset():
         vis_thr=0.2,
         use_gt_bbox=True,
         det_bbox_thr=0.0,
-        bbox_file='tests/data/coco/test_coco_det_AP_H_56.json',
+        bbox_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco_det_AP_H_56.json',
     )
 
     dataset_cfg = dict(
         type='TopDownCocoDataset',
-        ann_file='tests/data/coco/test_coco.json',
-        img_prefix='tests/data/coco/',
+        ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco.json',
+        img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
         data_cfg=data_cfg,
         pipeline=[],
         dataset_info=dataset_info)

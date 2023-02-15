@@ -21,7 +21,7 @@ def test_inference_without_dataset_info():
     if 'dataset_info' in pose_model.cfg:
         _ = pose_model.cfg.pop('dataset_info')
 
-    image_name = 'tests/data/coco/000000000785.jpg'
+    image_name = 'tests//datagrid/personal/purkrmir/data/COCO/original//000000000785.jpg'
     person_result = []
     person_result.append({'bbox': [50, 50, 50, 100]})
 
@@ -50,7 +50,7 @@ def test_inference_without_dataset_info():
     if 'dataset_info' in pose_model.cfg:
         _ = pose_model.cfg.pop('dataset_info')
 
-    image_name = 'tests/data/coco/000000000785.jpg'
+    image_name = 'tests//datagrid/personal/purkrmir/data/COCO/original//000000000785.jpg'
 
     with pytest.warns(DeprecationWarning):
         pose_results, _ = inference_bottom_up_pose_model(
@@ -68,7 +68,7 @@ def test_inference_without_dataset_info():
     if 'dataset_info' in pose_model.cfg:
         _ = pose_model.cfg.pop('dataset_info')
 
-    image_name = 'tests/data/coco/000000000785.jpg'
+    image_name = 'tests//datagrid/personal/purkrmir/data/COCO/original//000000000785.jpg'
     person_result = [{'bbox': [50, 50, 50, 100]}]
 
     with pytest.warns(DeprecationWarning):
@@ -95,7 +95,7 @@ def test_inference_without_dataset_info():
     if 'dataset_info' in pose_model.cfg:
         _ = pose_model.cfg.pop('dataset_info')
 
-    image_name = 'tests/data/coco/000000000785.jpg'
+    image_name = 'tests//datagrid/personal/purkrmir/data/COCO/original//000000000785.jpg'
     with pytest.warns(DeprecationWarning):
         pose_results, _ = inference_bottom_up_pose_model(
             pose_model, image_name)

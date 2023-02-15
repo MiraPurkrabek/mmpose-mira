@@ -117,7 +117,7 @@ model = dict(
             max_per_img=100,
             mask_thr_binary=0.5)))
 dataset_type = 'CocoDataset'
-data_root = 'data/coco/'
+data_root = '/datagrid/personal/purkrmir/data/COCO/original//'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 train_pipeline = [
@@ -158,8 +158,8 @@ data = dict(
     workers_per_gpu=2,
     train=dict(
         type='CocoDataset',
-        ann_file='data/coco/annotations/instances_train2017.json',
-        img_prefix='data/coco/train2017/',
+        ann_file='/datagrid/personal/purkrmir/data/COCO/original//annotations/instances_train2017.json',
+        img_prefix='/datagrid/personal/purkrmir/data/COCO/original//train2017/',
         pipeline=[
             dict(type='LoadImageFromFile'),
             dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
@@ -178,8 +178,8 @@ data = dict(
         ]),
     val=dict(
         type='CocoDataset',
-        ann_file='data/coco/annotations/instances_val2017.json',
-        img_prefix='data/coco/val2017/',
+        ann_file='/datagrid/personal/purkrmir/data/COCO/original//annotations/instances_val2017.json',
+        img_prefix='/datagrid/personal/purkrmir/data/COCO/original//val2017/',
         pipeline=[
             dict(type='LoadImageFromFile'),
             dict(
@@ -201,8 +201,8 @@ data = dict(
         ]),
     test=dict(
         type='CocoDataset',
-        ann_file='data/coco/annotations/instances_val2017.json',
-        img_prefix='data/coco/val2017/',
+        ann_file='/datagrid/personal/purkrmir/data/COCO/original//annotations/instances_val2017.json',
+        img_prefix='/datagrid/personal/purkrmir/data/COCO/original//val2017/',
         pipeline=[
             dict(type='LoadImageFromFile'),
             dict(

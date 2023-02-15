@@ -83,8 +83,7 @@ data_cfg = dict(
     vis_thr=0.2,
     use_gt_bbox=False,
     det_bbox_thr=0.0,
-    bbox_file='data/coco/person_detection_results/'
-    'COCO_val2017_detections_AP_H_56_person.json',
+    bbox_file='/datagrid/personal/purkrmir/data/COCO/original/annotations/person_keypoints_val2017.json',
 )
 
 train_pipeline = [
@@ -139,7 +138,7 @@ val_pipeline = [
 
 test_pipeline = val_pipeline
 
-data_root = 'data/coco'
+data_root = '/datagrid/personal/purkrmir/data/COCO/original/'
 data = dict(
     samples_per_gpu=32,
     workers_per_gpu=4,

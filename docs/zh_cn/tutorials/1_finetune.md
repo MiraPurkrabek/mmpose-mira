@@ -95,7 +95,7 @@ MMPose 支持十余种不同的数据集，包括 COCO, COCO-WholeBody, MPII, MP
 用户可将自定义数据集转换为已有数据集格式，并修改如下字段。
 
 ```python
-data_root = 'data/coco'
+data_root = '/datagrid/personal/purkrmir/data/COCO/original/'
 data = dict(
     samples_per_gpu=32,
     workers_per_gpu=2,

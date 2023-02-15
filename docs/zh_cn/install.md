@@ -113,7 +113,7 @@ mim download mmpose --config associative_embedding_hrnet_w32_coco_512x512  --des
 如果您是**从源码安装**的 mmpose，那么直接运行以下命令进行验证：
 
 ```shell
-python demo/bottom_up_img_demo.py associative_embedding_hrnet_w32_coco_512x512.py hrnet_w32_coco_512x512-bcb8c247_20200816.pth --img-path tests/data/coco/ --out-img-root vis_results
+python demo/bottom_up_img_demo.py associative_embedding_hrnet_w32_coco_512x512.py hrnet_w32_coco_512x512-bcb8c247_20200816.pth --img-path tests//datagrid/personal/purkrmir/data/COCO/original// --out-img-root vis_results
 ```
 
 您可以在 `vis_results` 这个目录下看到输出的图片，这些图片展示了人体姿态估计的结果。

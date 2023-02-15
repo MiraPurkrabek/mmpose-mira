@@ -58,7 +58,7 @@ data_cfg = dict(
     use_gt_bbox=False,
     det_bbox_thr=0.0,
     bbox_file='/datagrid/personal/purkrmir/data/COCO/original/annotations/person_keypoints_val2017.json',
-    # bbox_file='data/coco/person_detection_results/'
+    # bbox_file='/datagrid/personal/purkrmir/data/COCO/original//person_detection_results/'
     # 'COCO_val2017_detections_AP_H_56_person.json',
 )
 

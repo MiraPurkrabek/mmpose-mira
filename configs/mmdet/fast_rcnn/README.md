@@ -31,8 +31,8 @@ Before training the Fast R-CNN, users should first train an [RPN](../rpn/README.
 ```python
 data = dict(
     test=dict(
-        ann_file='data/coco/annotations/instances_train2017.json',
-        img_prefix='data/coco/train2017/'))
+        ann_file='/datagrid/personal/purkrmir/data/COCO/original//annotations/instances_train2017.json',
+        img_prefix='/datagrid/personal/purkrmir/data/COCO/original//train2017/'))
 ```
 
 - Extract the region proposals of the train set by this command as below:

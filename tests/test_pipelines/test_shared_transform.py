@@ -64,7 +64,7 @@ def test_load_image_from_file():
     load = dict(type='LoadImageFromFile')
     load = build_from_cfg(load, PIPELINES)
 
-    data_prefix = 'tests/data/coco/'
+    data_prefix = 'tests//datagrid/personal/purkrmir/data/COCO/original//'
     image_file = osp.join(data_prefix, '00000000078.jpg')
     results = dict(image_file=image_file)
 
@@ -124,7 +124,7 @@ def test_load_image_from_file():
 
 
 def test_albu_transform():
-    data_prefix = 'tests/data/coco/'
+    data_prefix = 'tests//datagrid/personal/purkrmir/data/COCO/original//'
     results = dict(image_file=osp.join(data_prefix, '000000000785.jpg'))
 
     # Define simple pipeline
@@ -148,7 +148,7 @@ def test_albu_transform():
 
 
 def test_photometric_distortion_transform():
-    data_prefix = 'tests/data/coco/'
+    data_prefix = 'tests//datagrid/personal/purkrmir/data/COCO/original//'
     results = dict(image_file=osp.join(data_prefix, '000000000785.jpg'))
 
     # Define simple pipeline

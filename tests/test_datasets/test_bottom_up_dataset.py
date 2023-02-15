@@ -73,16 +73,16 @@ def test_bottom_up_COCO_dataset():
         use_nms=True)
 
     _ = dataset_class(
-        ann_file='tests/data/coco/test_coco.json',
-        img_prefix='tests/data/coco/',
+        ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco.json',
+        img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
         data_cfg=data_cfg,
         pipeline=[],
         dataset_info=dataset_info,
         test_mode=False)
 
     custom_dataset = dataset_class(
-        ann_file='tests/data/coco/test_coco.json',
-        img_prefix='tests/data/coco/',
+        ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco.json',
+        img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
         data_cfg=data_cfg,
         pipeline=[],
         dataset_info=dataset_info,
@@ -308,16 +308,16 @@ def test_bottom_up_COCO_wholebody_dataset():
     )
 
     _ = dataset_class(
-        ann_file='tests/data/coco/test_coco_wholebody.json',
-        img_prefix='tests/data/coco/',
+        ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco_wholebody.json',
+        img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
         data_cfg=data_cfg,
         pipeline=[],
         dataset_info=dataset_info,
         test_mode=False)
 
     custom_dataset = dataset_class(
-        ann_file='tests/data/coco/test_coco_wholebody.json',
-        img_prefix='tests/data/coco/',
+        ann_file='tests//datagrid/personal/purkrmir/data/COCO/original//test_coco_wholebody.json',
+        img_prefix='tests//datagrid/personal/purkrmir/data/COCO/original//',
         data_cfg=data_cfg,
         pipeline=[],
         dataset_info=dataset_info,
